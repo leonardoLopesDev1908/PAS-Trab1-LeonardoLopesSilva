@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      -
+  redis-cache:
+    image: redis:7.4-alpine
+    container_name: redis_cache
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass MySecurePassword123 --save 60 1
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  redis_data:
