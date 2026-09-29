@@ -2,22 +2,16 @@ package com.acmepolling.acme.repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
 import com.acmepolling.acme.entity.Candidato;
+import org.springframework.stereotype.Repository;
 
-@Component
-public class CandidatoRepository {
-
-    HashMap<UUID, Candidato> candidatos = new HashMap<>();
-
-    public ArrayList<Candidato> findAll() {
-        return new ArrayList<Candidato>(candidatos.values());
-    }
-
-    public void save(Candidato candidato) {
-        candidatos.putIfAbsent(UUID.randomUUID(), candidato);
-    }
+@Repository
+public interface CandidatoRepository extends JpaRepository<Candidato, UUID> {
+    Optional<Candidato> findByNumero(String numero);
 }

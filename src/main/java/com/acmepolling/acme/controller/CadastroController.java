@@ -52,11 +52,12 @@ public class CadastroController {
     @PutMapping("/atualizandidato/{numero}/situacao/{status}")
     public ResponseEntity<ResponseCandidatoDto> atualizaCandidato(@PathVariable String numero,
                                                                   @PathVariable String situacao) {
-
+        ResponseCandidatoDto response = mapper.toDto(service.atualizaCandidato(numero, situacao));
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/removecandidato")
-    public ResponseEntity<Boolean> removeCandidato(@RequestBody int codigo) {
+    public ResponseEntity<Boolean> removeCandidato(@RequestBody String codigo) {
         Boolean success = service.removeCandidato(codigo);
         return ResponseEntity.ok(success);
     }

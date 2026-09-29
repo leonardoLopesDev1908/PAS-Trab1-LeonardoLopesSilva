@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import com.acmepolling.acme.controller.dto.request.CreateCandidatoDto;
+import com.acmepolling.acme.controller.dto.response.ResponseCandidatoDto;
 import com.acmepolling.acme.entity.Candidato;
+import org.apache.catalina.connector.Response;
 
 public interface CandidatoService {
     Boolean cadastrarCandidato(Candidato candidato);
@@ -15,5 +17,9 @@ public interface CandidatoService {
 
     ArrayList<Candidato> getTodosPorLocalSituacao(String cep, String situacao);
 
-    Boolean removeCandidato(int codigo);
+    Candidato atualizaCandidato(String numero, String situacao);
+
+    Boolean removeCandidato(String numero);
+
+    Candidato getCandidatoPorNumero(String numero);
 }
