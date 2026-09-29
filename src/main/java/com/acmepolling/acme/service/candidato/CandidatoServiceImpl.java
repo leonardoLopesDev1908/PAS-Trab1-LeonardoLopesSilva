@@ -2,7 +2,10 @@ package com.acmepolling.acme.service.candidato;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
+import com.acmepolling.acme.controller.dto.request.CreateCandidatoDto;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.acmepolling.acme.entity.Candidato;
@@ -18,15 +21,18 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     @Override
-    public Candidato cadastrarCandidato(Candidato candidato) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'cadastrarCandidato'");
+    public Boolean cadastrarCandidato(Candidato candidato) {
+        Candidato candidatoSalvo = repository.save(candidato);
+        return candidatoSalvo == null ? Boolean.FALSE : Boolean.TRUE;
     }
 
     @Override
     public Candidato getPorId(UUID id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPorId'");
+        Candidato candidato = repository.findById(id).orElseThrow(() -> {
+            throw new EntityNotFoundException("Candidato não encontrado");
+        });
+
+        return candidato;
     }
 
     @Override
@@ -35,5 +41,20 @@ public class CandidatoServiceImpl implements CandidatoService {
 
         return candidatos;
     }
-    
+
+    @Override
+    public ArrayList<Candidato> getTodosPorLocalSituacao(String cep, String situacao) {
+        ArrayList<Candidato> candidatos = repository.findAll().stream()
+                .filter(c -> c.getStatus().equals(situacao))
+                .filter(c -> c.getCep().equals(cep))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        return candidatos;
+    }
+
+    @Override
+    public Boolean removeCandidato(int codigo) {
+        return null;
+    }
+
 }

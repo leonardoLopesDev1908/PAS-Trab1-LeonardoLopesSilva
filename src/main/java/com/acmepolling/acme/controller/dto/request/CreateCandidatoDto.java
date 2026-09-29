@@ -4,14 +4,14 @@ import jakarta.validation.constraints.NotBlank;
 
 public record CreateCandidatoDto(
     @NotBlank
+    String numero,
+
+    @NotBlank 
     String nome,
 
     @NotBlank 
-    String partido,
+    String codigo,
 
     @NotBlank 
-    String cidade,
-
-    @NotBlank 
-    String estado
+    String cep
 ) {}

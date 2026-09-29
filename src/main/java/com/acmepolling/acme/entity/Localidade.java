@@ -1,11 +1,10 @@
 package com.acmepolling.acme.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
@@ -22,6 +21,15 @@ public class Localidade{
     @GeneratedValue(strategy=GenerationType.UUID)
     UUID id;
 
+    @Column
+    private String cep;
+
+    @Column
     private String cidade;
+
+    @Column
     private String estado;
+
+    @OneToMany(mappedBy = "candidato", cascade = CascadeType.ALL, orphanRemoval = false)
+    private List<Candidato> candidatos = new ArrayList<>();
 }

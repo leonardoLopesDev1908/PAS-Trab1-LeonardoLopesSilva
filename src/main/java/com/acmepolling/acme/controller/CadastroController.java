@@ -3,10 +3,9 @@ package com.acmepolling.acme.controller;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import com.acmepolling.acme.controller.dto.request.CreateCandidatoDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.acmepolling.acme.common.ApiConstants;
 import com.acmepolling.acme.controller.dto.response.ResponseCandidatoDto;
@@ -33,5 +32,32 @@ public class CadastroController {
         
         return ResponseEntity.ok(candidatos);
     }
-    //@PostMapping("/lista")
+
+    @GetMapping("/listacandidatoslocalidade/{cep}/situação/{situacao}")
+    public ResponseEntity<ArrayList<ResponseCandidatoDto>> getTodosPorLocalSituacao(@PathVariable String cep,
+                                                                                    @PathVariable String situacao) {
+        ArrayList<ResponseCandidatoDto> candidatos = service.getTodosPorLocalSituacao(cep, situacao).stream()
+                .map(c -> mapper.toDto(c))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        return ResponseEntity.ok(candidatos);
+    }
+
+    @PostMapping("/cadcandidato")
+    public ResponseEntity<Boolean> cadastrarCandidato(@RequestBody CreateCandidatoDto dto) {
+        Boolean success = service.cadastrarCandidato(mapper.toEntity(dto));
+        return ResponseEntity.ok(success);
+    }
+
+    @PutMapping("/atualizandidato/{numero}/situacao/{status}")
+    public ResponseEntity<ResponseCandidatoDto> atualizaCandidato(@PathVariable String numero,
+                                                                  @PathVariable String situacao) {
+
+    }
+
+    @DeleteMapping("/removecandidato")
+    public ResponseEntity<Boolean> removeCandidato(@RequestBody int codigo) {
+        Boolean success = service.removeCandidato(codigo);
+        return ResponseEntity.ok(success);
+    }
 }

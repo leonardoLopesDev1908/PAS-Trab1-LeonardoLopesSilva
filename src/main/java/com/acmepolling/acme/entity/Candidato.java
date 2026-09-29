@@ -1,17 +1,13 @@
 package com.acmepolling.acme.entity;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import com.acmepolling.acme.entity.enums.CandidatoStatus;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,16 +31,20 @@ public class Candidato {
     private String nome;
 
     @Column
-    private CandidatoStatus status;
+    private String codigo;
 
     @Column
-    private String partido;
-    
-    //@Column
-    //private Partido partido;
+    private CandidatoStatus status;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "candidato_id")
+    private Partido partido;
+    
     // Na entidade Candidato (ou na classe onde está o campo)
     @ManyToOne
     @JoinColumn(name = "localidade_id")
     private Localidade localidade;
+
+    @ManyToMany(mappedBy = "candidatos")
+    private Set<Voto> votos = new HashSet<>();
 }
