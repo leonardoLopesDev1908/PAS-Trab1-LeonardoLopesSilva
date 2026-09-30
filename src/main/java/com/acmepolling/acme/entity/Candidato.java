@@ -1,6 +1,5 @@
 package com.acmepolling.acme.entity;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -8,11 +7,7 @@ import java.util.UUID;
 import com.acmepolling.acme.entity.enums.CandidatoStatus;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Builder
 @Getter
@@ -40,7 +35,6 @@ public class Candidato {
     @JoinColumn(name = "candidato_id")
     private Partido partido;
     
-    // Na entidade Candidato (ou na classe onde está o campo)
     @ManyToOne
     @JoinColumn(name = "localidade_id")
     private Localidade localidade;
