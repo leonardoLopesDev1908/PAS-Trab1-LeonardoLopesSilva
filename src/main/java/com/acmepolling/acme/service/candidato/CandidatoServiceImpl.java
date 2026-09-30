@@ -58,6 +58,9 @@ public class CandidatoServiceImpl implements CandidatoService {
     @Override
     public Candidato atualizaCandidato(String numero, String situacao) {
         Candidato candidato = getCandidatoPorNumero(numero);
+
+        //adicionar restricoes para as transicoes
+        
         candidato.setStatus(CandidatoStatus.valueOf(situacao));
         repository.save(candidato);
 

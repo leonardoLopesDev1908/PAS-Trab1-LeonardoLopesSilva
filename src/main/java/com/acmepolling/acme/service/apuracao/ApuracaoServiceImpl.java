@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 @Service
 public class ApuracaoServiceImpl implements ApuracaoService{
+    
     @Override
     public Candidato consultaEleito(String cep) {
         return null;
@@ -20,7 +21,8 @@ public class ApuracaoServiceImpl implements ApuracaoService{
     }
 
     @Override
-    public HashMap<ResponseCandidatoDto, Long> maisVotadosPorPartido() {
+    public HashMap<ResponseCandidatoDto, int> maisVotadosPorPartido() {
+        
         return null;
     }
 
