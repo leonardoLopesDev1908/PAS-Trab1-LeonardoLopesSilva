@@ -27,15 +27,14 @@ public class Voto {
     @CreatedDate
     private LocalDateTime hora;
 
+    @Column
+    private Boolean isValid;
+
     @ManyToOne
     @JoinColumn(name = "localidade_id")
     private Localidade localidade;
 
-    @ManyToMany
-    @JoinTable(
-            name = "tb_voto_candidato",
-            joinColumns = @JoinColumn(name = "voto_id"),
-            inverseJoinColumns = @JoinColumn(name = "candidato_id")
-    )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "candidato_id", nullable = false)
     private List<Candidato> candidatos = new ArrayList<>();
 }

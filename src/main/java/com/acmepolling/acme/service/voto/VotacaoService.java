@@ -6,4 +6,8 @@ import org.springframework.http.ResponseEntity;
 
 public interface VotacaoService {
     Boolean cadVoto(String cep, String numero);
+
+    Long getVotosValidosPorCandidato(String numero);
+
+    Long getVotosInvalidosPorCandidato(String numero);
 }

@@ -1,11 +1,13 @@
 package com.acmepolling.acme.service.candidato;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.acmepolling.acme.controller.dto.request.CreateCandidatoDto;
+import com.acmepolling.acme.controller.dto.response.CandidatoVotosCount;
 import com.acmepolling.acme.controller.dto.response.ResponseCandidatoDto;
 import com.acmepolling.acme.entity.enums.CandidatoStatus;
 import jakarta.persistence.EntityNotFoundException;
@@ -80,6 +82,26 @@ public class CandidatoServiceImpl implements CandidatoService {
     public Candidato getCandidatoPorNumero(String numero) {
         Optional<Candidato> candidato = repository.findByNumero(numero);
         return candidato.orElse(null);
+    }
+
+    @Override
+    public Candidato getEleitoPorLocalidade(String cep) {
+        Candidato candidato = repository.getEleitoPorLocalidade(cep);
+        return candidato;
+    }
+
+    @Override
+    public List<CandidatoVotosCount> getCandidatosPorLocalidade(String cep) {
+        List<CandidatoVotosCount> resultados = repository.countVotosPorCandidato(cep);
+
+        return resultados;
+    }
+
+    @Override
+    public List<CandidatoVotosCount> countVotosCandidatoPorPartido(String partido) {
+        List<CandidatoVotosCount> resultados = repository.countVotosCandidatoPorPartido(partido);
+
+        return resultados;
     }
 
 }

@@ -1,4 +1,6 @@
 package com.acmepolling.acme.controller.dto.response;
 
-public class ResponseLocalidadeDto {
-}
+public record ResponseLocalidadeDto(
+        String numero,
+        String nome
+) {}
