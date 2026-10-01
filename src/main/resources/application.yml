@@ -1,12 +1,11 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]
   datasource:
-    platform: postgres
-    url: jdbc:postgresql://localhost:5432/acme
-    username: ${POSTGRES_USERNAME}
+    url: jdbc:postgresql://localhost:5432/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
-    driverClassName: org.postgresql.Driver
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
-    hibernate.ddl-auto: update
-      
+    hibernate:
+      ddl-auto: update

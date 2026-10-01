@@ -39,6 +39,6 @@ public class Candidato {
     @JoinColumn(name = "localidade_id")
     private Localidade localidade;
 
-    @ManyToMany(mappedBy = "candidatos")
+    @ManyToMany(mappedBy = "candidato")
     private Set<Voto> votos = new HashSet<>();
 }

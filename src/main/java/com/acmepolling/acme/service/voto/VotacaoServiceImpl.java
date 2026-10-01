@@ -48,7 +48,7 @@ public class VotacaoServiceImpl implements VotacaoService{
     }
 
     @Override
-    public Long getVotosInValidosPorCandidato(String numero) {
+    public Long getVotosInvalidosPorCandidato(String numero) {
         return repository.getVotosInvalidosPorCandidato(numero);
     }
 }
