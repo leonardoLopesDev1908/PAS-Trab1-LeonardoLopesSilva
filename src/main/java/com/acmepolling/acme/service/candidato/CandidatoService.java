@@ -20,7 +20,7 @@ public interface CandidatoService {
 
     Boolean removeCandidato(String numero);
 
-    Candidato getCandidatoPorNumero(String numero);
+    Candidato getCandidatoPorCodigo(String codigo);
 
     Candidato getEleitoPorLocalidade(String cep);
 

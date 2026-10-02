@@ -6,9 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.acmepolling.acme.controller.dto.request.CreateCandidatoDto;
 import com.acmepolling.acme.controller.dto.response.CandidatoVotosCount;
-import com.acmepolling.acme.controller.dto.response.ResponseCandidatoDto;
 import com.acmepolling.acme.entity.enums.CandidatoStatus;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -58,8 +56,8 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     @Override
-    public Candidato atualizaCandidato(String numero, String situacao) {
-        Candidato candidato = getCandidatoPorNumero(numero);
+    public Candidato atualizaCandidato(String codigo, String situacao) {
+        Candidato candidato = getCandidatoPorCodigo(codigo);
 
         //adicionar restricoes para as transicoes
         
@@ -70,8 +68,8 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     @Override
-    public Boolean removeCandidato(String numero) {
-        Candidato candidato = getCandidatoPorNumero(numero);
+    public Boolean removeCandidato(String codigo) {
+        Candidato candidato = getCandidatoPorCodigo(codigo);
         candidato.setStatus(CandidatoStatus.REMOVIDO);
         repository.save(candidato);
 
@@ -79,8 +77,8 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     @Override
-    public Candidato getCandidatoPorNumero(String numero) {
-        Optional<Candidato> candidato = repository.findByNumero(numero);
+    public Candidato getCandidatoPorCodigo(String codigo) {
+        Optional<Candidato> candidato = repository.findByCodigo(codigo);
         return candidato.orElse(null);
     }
 
