@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import com.acmepolling.acme.controller.dto.response.CandidatoVotosCount;
 import com.acmepolling.acme.entity.enums.CandidatoStatus;
 import jakarta.persistence.EntityNotFoundException;
+import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import com.acmepolling.acme.entity.Candidato;
@@ -56,12 +57,26 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     @Override
-    public Candidato atualizaCandidato(String codigo, String situacao) {
+    public Candidato atualizaCandidato(String codigo, String situacao) throws BadRequestException {
         Candidato candidato = getCandidatoPorCodigo(codigo);
+        CandidatoStatus statusAtual = candidato.getStatus();
+        CandidatoStatus novoStatus = CandidatoStatus.valueOf(situacao);
 
-        //adicionar restricoes para as transicoes
+        if(novoStatus == statusAtual) throw new BadRequestException();
+        else if(novoStatus == CandidatoStatus.PRE_CANDIDATO) throw new BadRequestException();
+        else if((statusAtual == CandidatoStatus.PRE_CANDIDATO ||
+                statusAtual == CandidatoStatus.INELEGIVEL     ||
+                statusAtual == CandidatoStatus.REMOVIDO)      &&
+                (novoStatus == CandidatoStatus.ELEITO         ||
+                novoStatus == CandidatoStatus.NAO_ELEITO)
+        ) throw new BadRequestException();
+        else if((statusAtual == CandidatoStatus.ELEGIVEL &&
+                novoStatus == CandidatoStatus.REMOVIDO)  ||
+                (statusAtual == CandidatoStatus.REMOVIDO &&
+                novoStatus == CandidatoStatus.ELEGIVEL)
+        ) throw new BadRequestException();
         
-        candidato.setStatus(CandidatoStatus.valueOf(situacao));
+        candidato.setStatus(novoStatus);
         repository.save(candidato);
 
         return candidato;
