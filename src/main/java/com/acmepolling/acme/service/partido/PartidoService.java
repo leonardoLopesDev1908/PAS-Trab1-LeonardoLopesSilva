@@ -6,4 +6,10 @@ import java.util.List;
 
 public interface PartidoService {
     List<Partido> getTodos();
+
+    Boolean existePorCodigo(String codigo);
+
+    Partido getPorCodigo(String codigo);
+
+    Partido cadastraPartido();
 }

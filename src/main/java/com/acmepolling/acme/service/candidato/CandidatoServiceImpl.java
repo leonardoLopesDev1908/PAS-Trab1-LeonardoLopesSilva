@@ -8,8 +8,10 @@ import java.util.stream.Collectors;
 
 import com.acmepolling.acme.controller.dto.response.CandidatoVotosCount;
 import com.acmepolling.acme.entity.Localidade;
+import com.acmepolling.acme.entity.Partido;
 import com.acmepolling.acme.entity.enums.CandidatoStatus;
 import com.acmepolling.acme.service.localidade.LocalidadeService;
+import com.acmepolling.acme.service.partido.PartidoService;
 import jakarta.persistence.EntityNotFoundException;
 import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
@@ -22,14 +24,24 @@ public class CandidatoServiceImpl implements CandidatoService {
 
     CandidatoRepository repository;
     LocalidadeService localidadeService;
+    PartidoService partidoService;
 
-    public CandidatoServiceImpl(CandidatoRepository repository, LocalidadeService localidadeService) {
+    public CandidatoServiceImpl(CandidatoRepository repository, LocalidadeService localidadeService,
+                                PartidoService partidoService) {
         this.repository = repository;
         this.localidadeService = localidadeService;
+        this.partidoService = partidoService;
     }
 
     @Override
     public Boolean cadastrarCandidato(Candidato candidato) {
+        if(!partidoService.existePorCodigo(candidato.getCodigo().substring(0, 3))) {
+            System.out.println("Não existe partido com esse código");
+            return false;
+        }
+        Partido partido = partidoService.getPorCodigo(candidato.getCodigo());
+        candidato.setPartido(partido);
+
         String cep = candidato.getLocalidade().getCep();
         if(!localidadeService.existePorCep(cep)) {
             localidadeService.cadastraLocalidade(cep);
