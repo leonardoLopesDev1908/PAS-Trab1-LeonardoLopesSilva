@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import com.acmepolling.acme.entity.Partido;
+import com.acmepolling.acme.external.CepApi;
 import com.acmepolling.acme.repository.LocalidadeRepository;
 import com.acmepolling.acme.repository.PartidoRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -33,41 +34,33 @@ public class Seed {
     @Bean
     CommandLineRunner initDatabase(CandidatoRepository repository) {
         return args -> {
-            Localidade local1 = Localidade.builder()
-                    .cidade("Porto Alegre")
-                    .estado("Rio Grande do Sul")
-                    .cep("12314215")
-                    .build();
+            Localidade local1 = CepApi.getLocalidade("94935050");
 
-            Localidade local2 = Localidade.builder()
-                    .cidade("Canoas")
-                    .estado("Rio Grande do Sul")
-                    .cep("12314217")
-                    .build();
+            Localidade local2 = CepApi.getLocalidade("94970530");
 
-            Localidade local3 = Localidade.builder()
-                    .cidade("Cachoeirinha")
-                    .estado("Rio Grande do Sul")
-                    .cep("12314219")
-                    .build();
+            Localidade local3 = CepApi.getLocalidade("90010170");
+
             localidadeRepository.save(local1);
             localidadeRepository.save(local2);
             localidadeRepository.save(local3);
 
             Partido partido1 = Partido.builder()
                     .nome("Partido Político Partidário")
+                    .codigo("60")
                     .anoFundacao(2017)
                     .candidatos(new ArrayList<>())
                     .build();
 
             Partido partido2 = Partido.builder()
                     .nome("Partido da Política Brasileira")
+                    .codigo("99")
                     .anoFundacao(1994)
                     .candidatos(new ArrayList<>())
                     .build();
 
             Partido partido3 = Partido.builder()
                     .nome("Partido Colunista Brasileiro")
+                    .codigo("11")
                     .anoFundacao(1922)
                     .candidatos(new ArrayList<>())
                     .build();
@@ -77,6 +70,7 @@ public class Seed {
 
             Candidato candidato = Candidato.builder()
                 .nome("Candidato Teste 1")
+                .codigo(partido1.getCodigo())
                 .status(CandidatoStatus.PRE_CANDIDATO)
                 .partido(partido1)
                 .localidade(local1)
@@ -85,16 +79,18 @@ public class Seed {
             repository.save(candidato);
 
             Candidato candidato2 = Candidato.builder()
-                .nome("Candidato Teste 2")  
+                .nome("Candidato Teste 2")
+                .codigo(partido2.getCodigo())
                 .status(CandidatoStatus.PRE_CANDIDATO)
                 .partido(partido2)
-                .localidade(local1)
+                .localidade(local2)
                 .build();
 
             repository.save(candidato2);
 
             Candidato candidato3 = Candidato.builder()
                 .nome("Candidato Teste 3")
+                .codigo(partido3.getCodigo())
                 .status(CandidatoStatus.PRE_CANDIDATO)
                 .partido(partido3)
                 .localidade(local3)

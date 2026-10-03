@@ -23,6 +23,15 @@ public class Localidade{
     private String cep;
 
     @Column
+    private String logradouro;
+
+    @Column
+    private String complemento;
+
+    @Column
+    private String bairro;
+
+    @Column
     private String cidade;
 
     @Column

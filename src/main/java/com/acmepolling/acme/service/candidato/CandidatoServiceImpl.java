@@ -7,7 +7,9 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.acmepolling.acme.controller.dto.response.CandidatoVotosCount;
+import com.acmepolling.acme.entity.Localidade;
 import com.acmepolling.acme.entity.enums.CandidatoStatus;
+import com.acmepolling.acme.service.localidade.LocalidadeService;
 import jakarta.persistence.EntityNotFoundException;
 import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
@@ -19,13 +21,25 @@ import com.acmepolling.acme.repository.CandidatoRepository;
 public class CandidatoServiceImpl implements CandidatoService {
 
     CandidatoRepository repository;
+    LocalidadeService localidadeService;
 
-    public CandidatoServiceImpl(CandidatoRepository repository) {
+    public CandidatoServiceImpl(CandidatoRepository repository, LocalidadeService localidadeService) {
         this.repository = repository;
+        this.localidadeService = localidadeService;
     }
 
     @Override
     public Boolean cadastrarCandidato(Candidato candidato) {
+        String cep = candidato.getLocalidade().getCep();
+        if(!localidadeService.existePorCep(cep)) {
+            localidadeService.cadastraLocalidade(cep);
+        }
+
+        Localidade localidade = localidadeService.getPorCep(cep);
+
+        candidato.setLocalidade(localidade);
+        candidato.setStatus(CandidatoStatus.PRE_CANDIDATO);
+
         Candidato candidatoSalvo = repository.save(candidato);
         return candidatoSalvo == null ? Boolean.FALSE : Boolean.TRUE;
     }

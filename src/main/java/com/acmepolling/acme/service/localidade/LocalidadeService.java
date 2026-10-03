@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface LocalidadeService {
 
+    void cadastraLocalidade(String cep);
+
     List<Localidade> getTodas();
 
     Localidade getPorCep(String cep);

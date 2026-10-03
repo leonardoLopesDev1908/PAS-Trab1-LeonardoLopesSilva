@@ -20,7 +20,7 @@ public class Partido {
     private UUID String;
 
     @Column
-    private int codigo;
+    private String codigo;
 
     @Column
     private String nome;

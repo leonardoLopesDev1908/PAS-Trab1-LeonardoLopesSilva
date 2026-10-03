@@ -52,7 +52,7 @@ public class CadastroController {
 
     @PutMapping("/atualizandidato/{numero}/situacao/{status}")
     public ResponseEntity<ResponseCandidatoDto> atualizaCandidato(@PathVariable String numero,
-                                                                  @PathVariable String situacao) {
+                                                                  @PathVariable String situacao) throws BadRequestException {
         ResponseCandidatoDto response = mapper.toDto(service.atualizaCandidato(numero, situacao));
         return ResponseEntity.ok(response);
     }

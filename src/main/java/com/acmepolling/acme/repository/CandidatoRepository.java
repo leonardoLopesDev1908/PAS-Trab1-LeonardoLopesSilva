@@ -26,7 +26,7 @@ public interface CandidatoRepository extends JpaRepository<Candidato, UUID> {
         ) 
         FROM Voto v 
         WHERE v.candidato.localidade.cep = :cep
-        GROUP BY v.candidato.nome, v.candidato.codigo, v.candidato.partido.nome
+        GROUP BY v.candidato.nome, v.candidato.codigo, v.candidato.partido.nome, COUNT(v)
     """)
     List<CandidatoVotosCount> countVotosPorCandidato(@Param("cep") String cep);
 

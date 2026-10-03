@@ -28,11 +28,12 @@ public class Candidato {
     @Column
     private String codigo;
 
-    @Column
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'PRE_CANDIDATO'")
     private CandidatoStatus status;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "candidato_id")
+    @JoinColumn(name = "partido_id")
     private Partido partido;
     
     @ManyToOne

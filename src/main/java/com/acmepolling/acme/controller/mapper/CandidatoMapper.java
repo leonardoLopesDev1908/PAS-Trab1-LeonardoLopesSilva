@@ -13,7 +13,10 @@ import com.acmepolling.acme.entity.Localidade;
 public class CandidatoMapper {
 
     public Candidato toEntity(CreateCandidatoDto dto) {
-        Localidade localidade = new Localidade();
+        Localidade localidade = Localidade.builder()
+                .cep(dto.cep())
+                .build();
+
         return Candidato.builder()
             .nome(dto.nome())
             .codigo(dto.codigo())
