@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import com.acmepolling.acme.controller.dto.request.CreateCandidatoDto;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,7 +52,7 @@ public class CadastroController {
 
     @PutMapping("/atualizandidato/{numero}/situacao/{status}")
     public ResponseEntity<ResponseCandidatoDto> atualizaCandidato(@PathVariable String numero,
-                                                                  @PathVariable String situacao) {
+                                                                  @PathVariable String situacao) throws BadRequestException {
         ResponseCandidatoDto response = mapper.toDto(service.atualizaCandidato(numero, situacao));
         return ResponseEntity.ok(response);
     }

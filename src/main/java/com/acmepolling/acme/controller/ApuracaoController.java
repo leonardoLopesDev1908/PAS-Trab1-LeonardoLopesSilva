@@ -4,7 +4,6 @@ import com.acmepolling.acme.common.ApiConstants;
 import com.acmepolling.acme.controller.dto.response.*;
 import com.acmepolling.acme.controller.mapper.CandidatoMapper;
 import com.acmepolling.acme.service.apuracao.ApuracaoService;
-import com.acmepolling.acme.service.candidato.CandidatoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
 public class ApuracaoController {
 
     private final ApuracaoService service;
-
     private final CandidatoMapper candidatoMapper;
 
     public ApuracaoController(ApuracaoService service, CandidatoMapper candidatoMapper) {
@@ -40,8 +38,8 @@ public class ApuracaoController {
     }
 
     @GetMapping("/consultacandidato")
-    public ResponseEntity<ResponseVotosDto> consultaCandidato(@RequestParam String numero) {
-        ResponseVotosDto response = service.consultaVotosCandidato(numero);
+    public ResponseEntity<ResponseVotosDto> consultaCandidato(@RequestParam String codigo) {
+        ResponseVotosDto response = service.consultaVotosCandidato(codigo);
         return ResponseEntity.ok(response);
     }
 

@@ -25,7 +25,7 @@ public class VotacaoServiceImpl implements VotacaoService{
     }
 
     @Override
-    public Boolean cadVoto(String cep, String numero) {
+    public Boolean cadVoto(String cep, String codigo) {
         Voto voto = new Voto();
         LocalDateTime now = LocalDateTime.now();
         voto.setHora(now);
@@ -36,19 +36,19 @@ public class VotacaoServiceImpl implements VotacaoService{
         }
         //chamar apiExterna para pegar endereço com CEP
         //https://www.gov.br/conecta/catalogo/apis/cep-codigo-de-enderecamento-postal/swagger%20-1.json/swagger_view#tag/Consultar-CEP/paths/~1consulta~1cep~1{cep}/get
-        Candidato candidato = candidatoService.getCandidatoPorNumero(numero);
+        Candidato candidato = candidatoService.getCandidatoPorCodigo(codigo);
         //candidato.setLocalidade(localidade);
 
         return true;
     }
 
     @Override
-    public Long getVotosValidosPorCandidato(String numero) {
-        return repository.getVotosValidosPorCandidato(numero);
+    public Long getVotosValidosPorCandidato(String codigo) {
+        return repository.getVotosValidosPorCandidato(codigo);
     }
 
     @Override
-    public Long getVotosInValidosPorCandidato(String numero) {
-        return repository.getVotosInvalidosPorCandidato(numero);
+    public Long getVotosInvalidosPorCandidato(String codigo) {
+        return repository.getVotosInvalidosPorCandidato(codigo);
     }
 }

@@ -1,6 +1,7 @@
 .idea/
 .env
 
+target/
 .target/
 .classpath
 .factorypath

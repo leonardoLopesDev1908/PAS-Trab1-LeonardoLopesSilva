@@ -35,6 +35,5 @@ public class Voto {
     private Localidade localidade;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "candidato_id", nullable = false)
-    private List<Candidato> candidatos = new ArrayList<>();
+    private Candidato candidato;
 }

@@ -5,16 +5,14 @@ import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor 
+@NoArgsConstructor
+@Builder
 public class Localidade{
 
     @Id 
@@ -25,11 +23,20 @@ public class Localidade{
     private String cep;
 
     @Column
+    private String logradouro;
+
+    @Column
+    private String complemento;
+
+    @Column
+    private String bairro;
+
+    @Column
     private String cidade;
 
     @Column
     private String estado;
 
-    @OneToMany(mappedBy = "candidato", cascade = CascadeType.ALL, orphanRemoval = false)
+    @OneToMany(mappedBy = "localidade", cascade = CascadeType.ALL, orphanRemoval = false)
     private List<Candidato> candidatos = new ArrayList<>();
 }

@@ -1,10 +1,7 @@
 package com.acmepolling.acme.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 public class Partido {
 
     @Id
@@ -22,7 +20,7 @@ public class Partido {
     private UUID String;
 
     @Column
-    private int codigo;
+    private String codigo;
 
     @Column
     private String nome;
@@ -30,9 +28,6 @@ public class Partido {
     @Column
     private int anoFundacao;
 
-    @Column
-    private int numMembros;
-
-    @OneToMany(mappedBy = "candidato", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "partido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Candidato> candidatos = new ArrayList<>();
 }
