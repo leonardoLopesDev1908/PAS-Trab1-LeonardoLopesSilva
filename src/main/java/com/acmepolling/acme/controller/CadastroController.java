@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import com.acmepolling.acme.controller.dto.request.CreateCandidatoDto;
+import com.acmepolling.acme.controller.dto.request.RemoveCandidatoDto;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class CadastroController {
         return ResponseEntity.ok(candidatos);
     }
 
-    @GetMapping("/listacandidatoslocalidade/{cep}/situação/{situacao}")
+    @GetMapping("/listacandidatoslocalidade/{cep}/situacao/{situacao}")
     public ResponseEntity<ArrayList<ResponseCandidatoDto>> getTodosPorLocalSituacao(@PathVariable String cep,
                                                                                     @PathVariable String situacao) {
         ArrayList<ResponseCandidatoDto> candidatos = service.getTodosPorLocalSituacao(cep, situacao).stream()
@@ -52,14 +53,14 @@ public class CadastroController {
 
     @PutMapping("/atualizandidato/{numero}/situacao/{status}")
     public ResponseEntity<ResponseCandidatoDto> atualizaCandidato(@PathVariable String numero,
-                                                                  @PathVariable String situacao) throws BadRequestException {
-        ResponseCandidatoDto response = mapper.toDto(service.atualizaCandidato(numero, situacao));
+                                                                  @PathVariable String status) throws BadRequestException {
+        ResponseCandidatoDto response = mapper.toDto(service.atualizaCandidato(numero, status));
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/removecandidato")
-    public ResponseEntity<Boolean> removeCandidato(@RequestBody String codigo) {
-        Boolean success = service.removeCandidato(codigo);
+    public ResponseEntity<Boolean> removeCandidato(@RequestBody RemoveCandidatoDto dto) {
+        Boolean success = service.removeCandidato(dto.codigo());
         return ResponseEntity.ok(success);
     }
 }

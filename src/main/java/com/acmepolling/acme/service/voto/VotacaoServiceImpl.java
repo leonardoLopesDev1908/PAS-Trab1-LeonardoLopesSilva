@@ -30,16 +30,18 @@ public class VotacaoServiceImpl implements VotacaoService{
         LocalDateTime now = LocalDateTime.now();
         voto.setHora(now);
 
-        if(now.isBefore(ChronoLocalDateTime.from(HORARIO_MINIMO_VOTACAO)) ||
-                now.isAfter(ChronoLocalDateTime.from(HORARIO_MAXIMO_VOTACAO))) {
-            voto.setIsValid(false);
-        }
-        //chamar apiExterna para pegar endereço com CEP
-        //https://www.gov.br/conecta/catalogo/apis/cep-codigo-de-enderecamento-postal/swagger%20-1.json/swagger_view#tag/Consultar-CEP/paths/~1consulta~1cep~1{cep}/get
-        Candidato candidato = candidatoService.getCandidatoPorCodigo(codigo);
-        //candidato.setLocalidade(localidade);
+        LocalTime horaAtual = now.toLocalTime();
 
-        return true;
+        voto.setIsValid(!horaAtual.isBefore(HORARIO_MINIMO_VOTACAO)
+                     && !horaAtual.isAfter(HORARIO_MAXIMO_VOTACAO)
+        );
+
+        Candidato candidato = candidatoService.getCandidatoPorCodigo(codigo);
+        voto.setCandidato(candidato);
+
+        repository.save(voto);
+
+        return voto.getIsValid();
     }
 
     @Override

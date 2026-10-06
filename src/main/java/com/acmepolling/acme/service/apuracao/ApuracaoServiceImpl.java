@@ -38,12 +38,10 @@ public class ApuracaoServiceImpl implements ApuracaoService{
 
     @Override
     public Candidato consultaEleito(String cep) {
-        //testar horário
         if(LocalDateTime.now().getHour() < 17) {
             System.out.println("Horário de apuração ainda não começou");
             return null;
         }
-        //testar se cep existe
         if(!localidadeService.existePorCep(cep)){
             throw new EntityNotFoundException();
         }
@@ -74,8 +72,14 @@ public class ApuracaoServiceImpl implements ApuracaoService{
 
     @Override
     public ResponseVotosDto consultaVotosCandidato(String numero) {
+        if(!candidatoService.existPorCodigo(numero)) {
+            throw new EntityNotFoundException("Não existe candidato com esse número");
+        }
+
         Long votosValidos = votoService.getVotosValidosPorCandidato(numero);
         Long votosInvalidos = votoService.getVotosInvalidosPorCandidato(numero);
+
+        System.out.printf("Votos válidos: %d\nVotos inválidos: %d\n", votosValidos, votosInvalidos);
 
         return new ResponseVotosDto(votosValidos, votosInvalidos);
     }

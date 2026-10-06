@@ -9,7 +9,20 @@ import com.acmepolling.acme.entity.Candidato;
 import org.apache.coyote.BadRequestException;
 
 public interface CandidatoService {
+
+    Candidato atualizaCandidato(String numero, String situacao) throws BadRequestException;
+
     Boolean cadastrarCandidato(Candidato candidato);
+
+    List<CandidatoVotosCount> countVotosCandidatoPorPartido(String partido);
+
+    Boolean existPorCodigo(String codigo);
+
+    Candidato getCandidatoPorCodigo(String codigo);
+
+    List<CandidatoVotosCount> getCandidatosPorLocalidade(String cep);
+
+    Candidato getEleitoPorLocalidade(String cep);
 
     Candidato getPorId(UUID id);
 
@@ -17,15 +30,5 @@ public interface CandidatoService {
 
     ArrayList<Candidato> getTodosPorLocalSituacao(String cep, String situacao);
 
-    Candidato atualizaCandidato(String numero, String situacao) throws BadRequestException;
-
     Boolean removeCandidato(String numero);
-
-    Candidato getCandidatoPorCodigo(String codigo);
-
-    Candidato getEleitoPorLocalidade(String cep);
-
-    List<CandidatoVotosCount> getCandidatosPorLocalidade(String cep);
-
-    List<CandidatoVotosCount> countVotosCandidatoPorPartido(String partido);
 }
