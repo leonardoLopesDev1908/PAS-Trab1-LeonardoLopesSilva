@@ -49,4 +49,11 @@ public class ApuracaoController {
 
         return ResponseEntity.ok(maisVotados);
     }
+
+//    @GetMapping("/apurar")
+//    public ResponseEntity<ResponseCandidatoDto> apuracao() {
+//        ArrayList<ResponseCandidatoDto>
+//
+//        return ResponseEntity.ok();
+//    }
 }

@@ -35,7 +35,7 @@ public class CandidatoServiceImpl implements CandidatoService {
 
     @Override
     public Boolean cadastrarCandidato(Candidato candidato) {
-        if(!partidoService.existePorCodigo(candidato.getCodigo().substring(0, 3))) {
+        if(!partidoService.existePorCodigo(candidato.getCodigo().substring(0, 2))) {
             System.out.println("Não existe partido com esse código");
             return false;
         }
@@ -75,7 +75,7 @@ public class CandidatoServiceImpl implements CandidatoService {
     @Override
     public ArrayList<Candidato> getTodosPorLocalSituacao(String cep, String situacao) {
         ArrayList<Candidato> candidatos = repository.findAll().stream()
-                .filter(c -> c.getStatus().equals(situacao))
+                .filter(c -> c.getStatus().equals(CandidatoStatus.valueOf(situacao)))
                 .filter(c -> c.getLocalidade().getCep().equals(cep))
                 .collect(Collectors.toCollection(ArrayList::new));
 
@@ -110,7 +110,12 @@ public class CandidatoServiceImpl implements CandidatoService {
 
     @Override
     public Boolean removeCandidato(String codigo) {
-        Candidato candidato = getCandidatoPorCodigo(codigo);
+        if(!repository.existsByCodigo(codigo)) throw new EntityNotFoundException();
+
+        Candidato candidato = repository.findByCodigo(codigo).orElseThrow(() -> {
+            throw new EntityNotFoundException();
+        });
+
         candidato.setStatus(CandidatoStatus.REMOVIDO);
         repository.save(candidato);
 
@@ -120,13 +125,17 @@ public class CandidatoServiceImpl implements CandidatoService {
     @Override
     public Candidato getCandidatoPorCodigo(String codigo) {
         Optional<Candidato> candidato = repository.findByCodigo(codigo);
-        return candidato.orElse(null);
+
+        if(candidato.isEmpty()) throw new EntityNotFoundException();
+        return candidato.get();
     }
 
     @Override
     public Candidato getEleitoPorLocalidade(String cep) {
-        Candidato candidato = repository.getEleitoPorLocalidade(cep);
-        return candidato;
+        Optional<Candidato> candidato = Optional.ofNullable(repository.getEleitoPorLocalidade(cep).orElseThrow(() -> {
+            throw new EntityNotFoundException();
+        }));
+        return candidato.get();
     }
 
     @Override
@@ -141,6 +150,11 @@ public class CandidatoServiceImpl implements CandidatoService {
         List<CandidatoVotosCount> resultados = repository.countVotosCandidatoPorPartido(partido);
 
         return resultados;
+    }
+
+    @Override
+    public Boolean existPorCodigo(String codigo) {
+        return repository.existsByCodigo(codigo);
     }
 
 }
