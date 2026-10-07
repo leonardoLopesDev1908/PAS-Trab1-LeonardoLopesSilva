@@ -14,16 +14,16 @@ public interface VotoRepository extends JpaRepository<Voto, UUID> {
     @Query("""
     SELECT COUNT(v)
     FROM Voto v
-    WHERE v.candidato.codigo = :codigo 
+    WHERE v.candidato.numero = :numero 
       AND v.isValid = true
     """)
-    Long getVotosValidosPorCandidato(@Param("codigo") String codigo);
+    Long getVotosValidosPorCandidato(@Param("numero") String numero);
 
     @Query("""
     SELECT COUNT(v)
     FROM Voto v
-    WHERE v.candidato.codigo = :codigo 
+    WHERE v.candidato.numero = :numero 
       AND v.isValid = false
     """)
-    Long getVotosInvalidosPorCandidato(@Param("codigo") String codigo);
+    Long getVotosInvalidosPorCandidato(@Param("numero") String numero);
 }

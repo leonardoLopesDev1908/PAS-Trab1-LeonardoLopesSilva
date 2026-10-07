@@ -26,7 +26,7 @@ public class Candidato {
     private String nome;
 
     @Column
-    private String codigo;
+    private String numero;
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(255) DEFAULT 'PRE_CANDIDATO'")

@@ -7,7 +7,7 @@ public record CreateCandidatoDto(
     String nome,
 
     @NotBlank 
-    String codigo,
+    String numero,
 
     @NotBlank 
     String cep

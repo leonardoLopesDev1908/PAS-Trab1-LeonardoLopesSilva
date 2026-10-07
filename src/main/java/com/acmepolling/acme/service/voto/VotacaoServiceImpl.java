@@ -25,7 +25,7 @@ public class VotacaoServiceImpl implements VotacaoService{
     }
 
     @Override
-    public Boolean cadVoto(String cep, String codigo) {
+    public Boolean cadVoto(String cep, String numero) {
         Voto voto = new Voto();
         LocalDateTime now = LocalDateTime.now();
         voto.setHora(now);
@@ -36,7 +36,7 @@ public class VotacaoServiceImpl implements VotacaoService{
                      && !horaAtual.isAfter(HORARIO_MAXIMO_VOTACAO)
         );
 
-        Candidato candidato = candidatoService.getCandidatoPorCodigo(codigo);
+        Candidato candidato = candidatoService.getCandidatoPorNumero(numero);
         voto.setCandidato(candidato);
 
         repository.save(voto);
@@ -45,12 +45,12 @@ public class VotacaoServiceImpl implements VotacaoService{
     }
 
     @Override
-    public Long getVotosValidosPorCandidato(String codigo) {
-        return repository.getVotosValidosPorCandidato(codigo);
+    public Long getVotosValidosPorCandidato(String numero) {
+        return repository.getVotosValidosPorCandidato(numero);
     }
 
     @Override
-    public Long getVotosInvalidosPorCandidato(String codigo) {
-        return repository.getVotosInvalidosPorCandidato(codigo);
+    public Long getVotosInvalidosPorCandidato(String numero) {
+        return repository.getVotosInvalidosPorCandidato(numero);
     }
 }

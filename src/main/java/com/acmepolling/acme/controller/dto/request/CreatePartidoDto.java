@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record CreatePartidoDto(
     @NotNull
-    Integer codigo,
+    Integer numero,
     @NotBlank
     String nome
 ) {}

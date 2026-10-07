@@ -12,9 +12,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CandidatoRepository extends JpaRepository<Candidato, UUID> {
-    Optional<Candidato> findByCodigo(String codigo);
+    Optional<Candidato> findByNumero(String numero);
 
-    Boolean existsByCodigo(String codigo);
+    Boolean existsByNumero(String numero);
 
     @Query("SELECT c FROM Candidato c WHERE c.status = com.acmepolling.acme.entity.enums.CandidatoStatus.ELEITO AND c.localidade.cep = :cep ")
     Optional<Candidato> getEleitoPorLocalidade(@Param("cep") String cep);
@@ -22,26 +22,26 @@ public interface CandidatoRepository extends JpaRepository<Candidato, UUID> {
     @Query("""
                 SELECT new com.acmepolling.acme.controller.dto.response.CandidatoVotosCount(
                     v.candidato.nome,
-                    v.candidato.codigo, 
+                    v.candidato.numero, 
                     v.candidato.partido.nome, 
                     COUNT(v)
                 ) 
                 FROM Voto v 
-                WHERE v.candidato.localidade.cep = :cep
-                GROUP BY v.candidato.nome, v.candidato.codigo, v.candidato.partido.nome
+                WHERE v.candidato.localidade.cep = :cep AND v.isValid = true
+                GROUP BY v.candidato.nome, v.candidato.numero, v.candidato.partido.nome
             """)
     List<CandidatoVotosCount> countVotosPorCandidato(@Param("cep") String cep);
 
     @Query("""
             SELECT new com.acmepolling.acme.controller.dto.response.CandidatoVotosCount(
                 v.candidato.nome, 
-                v.candidato.codigo, 
+                v.candidato.numero, 
                 v.candidato.partido.nome, 
                 COUNT(v)
             )
             FROM Voto v
-            WHERE v.candidato.partido.nome = :partido
-            GROUP BY v.candidato.nome, v.candidato.codigo, v.candidato.partido.nome
+            WHERE v.candidato.partido.nome = :partido AND v.isValid = true
+            GROUP BY v.candidato.nome, v.candidato.numero, v.candidato.partido.nome
             ORDER BY COUNT(v) DESC
             """)
     List<CandidatoVotosCount> countVotosCandidatoPorPartido(@Param("partido") String partido);

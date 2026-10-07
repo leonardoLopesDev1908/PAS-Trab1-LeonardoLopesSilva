@@ -9,6 +9,6 @@ import java.util.UUID;
 
 @Repository
 public interface PartidoRepository extends JpaRepository<Partido, UUID> {
-    boolean existsByCodigo(String codigo);
-    Optional<Partido> findByCodigo(String codigo);
+    boolean existsByNumero(String numero);
+    Optional<Partido> findByNumero(String numero);
 }

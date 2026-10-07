@@ -4,6 +4,7 @@ import com.acmepolling.acme.controller.dto.response.CandidatoVotosCount;
 import com.acmepolling.acme.controller.dto.response.ResponseVotosDto;
 import com.acmepolling.acme.entity.Candidato;
 import com.acmepolling.acme.entity.Partido;
+import com.acmepolling.acme.exceptions.ForaHorarioApuracaoException;
 import com.acmepolling.acme.repository.CandidatoRepository;
 import com.acmepolling.acme.repository.LocalidadeRepository;
 import com.acmepolling.acme.repository.PartidoRepository;
@@ -39,8 +40,7 @@ public class ApuracaoServiceImpl implements ApuracaoService{
     @Override
     public Candidato consultaEleito(String cep) {
         if(LocalDateTime.now().getHour() < 17) {
-            System.out.println("Horário de apuração ainda não começou");
-            return null;
+            throw new ForaHorarioApuracaoException("Fora do horário de apuração");
         }
         if(!localidadeService.existePorCep(cep)){
             throw new EntityNotFoundException();
@@ -72,7 +72,7 @@ public class ApuracaoServiceImpl implements ApuracaoService{
 
     @Override
     public ResponseVotosDto consultaVotosCandidato(String numero) {
-        if(!candidatoService.existPorCodigo(numero)) {
+        if(!candidatoService.existPorNumero(numero)) {
             throw new EntityNotFoundException("Não existe candidato com esse número");
         }
 

@@ -19,17 +19,17 @@ public class CandidatoMapper {
 
         return Candidato.builder()
             .nome(dto.nome())
-            .codigo(dto.codigo())
+            .numero(dto.numero())
             .localidade(localidade)
             .build();
     }
 
     public ResponseCandidatoDto toDto(Candidato candidato) {
-        //PartidoResponseDto dto = partidoMapper.toDto(candidato.getPartido());
+        System.out.println(candidato.getNome());
         ResponseCandidatoDto dto = new ResponseCandidatoDto(
             candidato.getNome(),
             candidato.getStatus(),
-            candidato.getCodigo(),
+            candidato.getNumero(),
             candidato.getPartido().getNome(),
             candidato.getLocalidade().getCep(),
             candidato.getLocalidade().getCidade(),

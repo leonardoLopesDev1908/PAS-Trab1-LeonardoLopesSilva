@@ -16,9 +16,9 @@ public interface CandidatoService {
 
     List<CandidatoVotosCount> countVotosCandidatoPorPartido(String partido);
 
-    Boolean existPorCodigo(String codigo);
+    Boolean existPorNumero(String numero);
 
-    Candidato getCandidatoPorCodigo(String codigo);
+    Candidato getCandidatoPorNumero(String numero);
 
     List<CandidatoVotosCount> getCandidatosPorLocalidade(String cep);
 

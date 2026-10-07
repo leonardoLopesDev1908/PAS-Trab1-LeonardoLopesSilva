@@ -23,13 +23,13 @@ public class PartidoServiceImpl implements PartidoService{
     }
 
     @Override
-    public Boolean existePorCodigo(String codigo) {
-        return repository.existsByCodigo(codigo);
+    public Boolean existePorNumero(String numero) {
+        return repository.existsByNumero(numero);
     }
 
     @Override
-    public Partido getPorCodigo(String codigo) {
-        Partido partido = repository.findByCodigo(codigo).orElseThrow(() -> {
+    public Partido getPorNumero(String numero) {
+        Partido partido = repository.findByNumero(numero).orElseThrow(() -> {
             throw new EntityNotFoundException();
         });
 

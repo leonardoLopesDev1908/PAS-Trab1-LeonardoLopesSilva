@@ -50,21 +50,21 @@ public class Seed {
 //
 //            Partido partido1 = Partido.builder()
 //                    .nome("Partido Político Partidário")
-//                    .codigo("60")
+//                    .numero("60")
 //                    .anoFundacao(2017)
 //                    .candidatos(new ArrayList<>())
 //                    .build();
 //
 //            Partido partido2 = Partido.builder()
 //                    .nome("Partido da Política Brasileira")
-//                    .codigo("99")
+//                    .numero("99")
 //                    .anoFundacao(1994)
 //                    .candidatos(new ArrayList<>())
 //                    .build();
 //
 //            Partido partido3 = Partido.builder()
 //                    .nome("Partido Colunista Brasileiro")
-//                    .codigo("11")
+//                    .numero("11")
 //                    .anoFundacao(1922)
 //                    .candidatos(new ArrayList<>())
 //                    .build();
@@ -74,7 +74,7 @@ public class Seed {
 //
 //            Candidato candidato = Candidato.builder()
 //                .nome("Candidato Teste 1")
-//                .codigo(partido1.getCodigo())
+//                .numero(partido1.getCodigo())
 //                .status(CandidatoStatus.PRE_CANDIDATO)
 //                .partido(partido1)
 //                .localidade(local1)
@@ -84,7 +84,7 @@ public class Seed {
 //
 //            Candidato candidato2 = Candidato.builder()
 //                .nome("Candidato Teste 2")
-//                .codigo(partido2.getCodigo())
+//                .numero(partido2.getCodigo())
 //                .status(CandidatoStatus.PRE_CANDIDATO)
 //                .partido(partido2)
 //                .localidade(local2)
@@ -94,7 +94,7 @@ public class Seed {
 //
 //            Candidato candidato3 = Candidato.builder()
 //                .nome("Candidato Teste 3")
-//                .codigo(partido3.getCodigo())
+//                .numero(partido3.getCodigo())
 //                .status(CandidatoStatus.PRE_CANDIDATO)
 //                .partido(partido3)
 //                .localidade(local3)
@@ -119,21 +119,21 @@ public class Seed {
 
             Partido partido1 = Partido.builder()
                     .nome("Partido Político Partidário")
-                    .codigo("60")
+                    .numero("60")
                     .anoFundacao(2017)
                     .candidatos(new ArrayList<>())
                     .build();
 
             Partido partido2 = Partido.builder()
                     .nome("Partido da Política Brasileira")
-                    .codigo("99")
+                    .numero("99")
                     .anoFundacao(1994)
                     .candidatos(new ArrayList<>())
                     .build();
 
             Partido partido3 = Partido.builder()
                     .nome("Partido Colunista Brasileiro")
-                    .codigo("11")
+                    .numero("11")
                     .anoFundacao(1922)
                     .candidatos(new ArrayList<>())
                     .build();
@@ -143,7 +143,7 @@ public class Seed {
 
             Candidato candidato = Candidato.builder()
                 .nome("Candidato Teste 1")
-                .codigo(partido1.getCodigo())
+                .numero(partido1.getNumero())
                 .status(CandidatoStatus.PRE_CANDIDATO)
                 .partido(partido1)
                 .localidade(local1)
@@ -153,7 +153,7 @@ public class Seed {
 
             Candidato candidato2 = Candidato.builder()
                 .nome("Candidato Teste 2")
-                .codigo(partido2.getCodigo())
+                .numero(partido2.getNumero())
                 .status(CandidatoStatus.PRE_CANDIDATO)
                 .partido(partido2)
                 .localidade(local2)
@@ -163,7 +163,7 @@ public class Seed {
 
             Candidato candidato3 = Candidato.builder()
                 .nome("Candidato Teste 3")
-                .codigo(partido3.getCodigo())
+                .numero(partido3.getNumero())
                 .status(CandidatoStatus.PRE_CANDIDATO)
                 .partido(partido3)
                 .localidade(local3)

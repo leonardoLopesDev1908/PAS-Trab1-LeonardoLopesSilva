@@ -35,11 +35,11 @@ public class CandidatoServiceImpl implements CandidatoService {
 
     @Override
     public Boolean cadastrarCandidato(Candidato candidato) {
-        if(!partidoService.existePorCodigo(candidato.getCodigo().substring(0, 2))) {
+        if(!partidoService.existePorNumero(candidato.getNumero().substring(0, 2))) {
             System.out.println("Não existe partido com esse código");
             return false;
         }
-        Partido partido = partidoService.getPorCodigo(candidato.getCodigo());
+        Partido partido = partidoService.getPorNumero(candidato.getNumero());
         candidato.setPartido(partido);
 
         String cep = candidato.getLocalidade().getCep();
@@ -83,8 +83,8 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     @Override
-    public Candidato atualizaCandidato(String codigo, String situacao) throws BadRequestException {
-        Candidato candidato = getCandidatoPorCodigo(codigo);
+    public Candidato atualizaCandidato(String numero, String situacao) throws BadRequestException {
+        Candidato candidato = getCandidatoPorNumero(numero);
         CandidatoStatus statusAtual = candidato.getStatus();
         CandidatoStatus novoStatus = CandidatoStatus.valueOf(situacao);
 
@@ -109,10 +109,10 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     @Override
-    public Boolean removeCandidato(String codigo) {
-        if(!repository.existsByCodigo(codigo)) throw new EntityNotFoundException();
+    public Boolean removeCandidato(String numero) {
+        if(!repository.existsByNumero(numero)) throw new EntityNotFoundException();
 
-        Candidato candidato = repository.findByCodigo(codigo).orElseThrow(() -> {
+        Candidato candidato = repository.findByNumero(numero).orElseThrow(() -> {
             throw new EntityNotFoundException();
         });
 
@@ -123,8 +123,8 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     @Override
-    public Candidato getCandidatoPorCodigo(String codigo) {
-        Optional<Candidato> candidato = repository.findByCodigo(codigo);
+    public Candidato getCandidatoPorNumero(String numero) {
+        Optional<Candidato> candidato = repository.findByNumero(numero);
 
         if(candidato.isEmpty()) throw new EntityNotFoundException();
         return candidato.get();
@@ -153,8 +153,8 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     @Override
-    public Boolean existPorCodigo(String codigo) {
-        return repository.existsByCodigo(codigo);
+    public Boolean existPorNumero(String numero) {
+        return repository.existsByNumero(numero);
     }
 
 }

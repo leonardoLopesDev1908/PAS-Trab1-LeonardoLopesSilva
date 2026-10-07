@@ -4,5 +4,5 @@ import jakarta.validation.constraints.NotBlank;
 
 public record RemoveCandidatoDto (
         @NotBlank
-        String codigo
+        String numero
 ){}

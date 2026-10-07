@@ -38,8 +38,8 @@ public class ApuracaoController {
     }
 
     @GetMapping("/consultacandidato")
-    public ResponseEntity<ResponseVotosDto> consultaCandidato(@RequestParam String codigo) {
-        ResponseVotosDto response = service.consultaVotosCandidato(codigo);
+    public ResponseEntity<ResponseVotosDto> consultaCandidato(@RequestParam String numero) {
+        ResponseVotosDto response = service.consultaVotosCandidato(numero);
         return ResponseEntity.ok(response);
     }
 

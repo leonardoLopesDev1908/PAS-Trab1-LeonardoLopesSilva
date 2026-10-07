@@ -7,9 +7,9 @@ import java.util.List;
 public interface PartidoService {
     List<Partido> getTodos();
 
-    Boolean existePorCodigo(String codigo);
+    Boolean existePorNumero(String numero);
 
-    Partido getPorCodigo(String codigo);
+    Partido getPorNumero(String numero);
 
     Partido cadastraPartido();
 }
