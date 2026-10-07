@@ -10,7 +10,7 @@ import org.apache.coyote.BadRequestException;
 
 public interface CandidatoService {
 
-    Candidato atualizaCandidato(String numero, String situacao) throws BadRequestException;
+    Candidato atualizaCandidato(String numero, String cep, String situacao) throws BadRequestException;
 
     Boolean cadastrarCandidato(Candidato candidato);
 
@@ -18,7 +18,7 @@ public interface CandidatoService {
 
     Boolean existPorNumero(String numero);
 
-    Candidato getCandidatoPorNumero(String numero);
+    List<Candidato> getCandidatoPorNumero(String numero);
 
     List<CandidatoVotosCount> getCandidatosPorLocalidade(String cep);
 
@@ -32,7 +32,7 @@ public interface CandidatoService {
 
     ArrayList<Candidato> getTodosPorLocalSituacao(String cep, String situacao);
 
-    Boolean removeCandidato(String numero);
+    Boolean removeCandidato(String numero, String cep);
 
     Candidato getMaisVotadoPorLocalizacao(String cep);
 }

@@ -110,6 +110,7 @@ class CadastroControllerTest {
     @DisplayName("Deve atualizar situação do candidato")
     void atualizaCandidato_DeveRetornarCandidatoAtualizado() throws Exception {
         String numero = "123";
+        String cep = "94935050";
         String novaSituacao = "ELEGIVEL";
         Candidato candidato = new Candidato();
         ResponseCandidatoDto responseDto = new ResponseCandidatoDto(
@@ -118,37 +119,39 @@ class CadastroControllerTest {
                 "RS"
         );
 
-        when(service.atualizaCandidato(numero, novaSituacao)).thenReturn(candidato);
+        when(service.atualizaCandidato(numero, cep, novaSituacao)).thenReturn(candidato);
         when(mapper.toDto(candidato)).thenReturn(responseDto);
 
-        mockMvc.perform(put(ApiConstants.API_CADASTRO + "/atualizandidato/{numero}/situacao/{situacao}", numero, novaSituacao)
+        mockMvc.perform(put(ApiConstants.API_CADASTRO + "/atualizandidato/{numero}/{cep}/situacao/{situacao}", numero, cep, novaSituacao)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.numero").value(numero))
                 .andExpect(jsonPath("$.status").value(novaSituacao));
 
-        verify(service).atualizaCandidato(numero, novaSituacao);
+        verify(service).atualizaCandidato(numero, cep, novaSituacao);
     }
 
     @Test
     @DisplayName("Deve lançar BadRequestException quando a atualização falhar")
     void atualizaCandidato_QuandoServiceLançaExceção_DeveRetornarErro() throws Exception {
+        String cep = "94935050";
         String numero = "999";
         String situacao = "INVALIDA";
 
-        when(service.atualizaCandidato(numero, situacao))
+        when(service.atualizaCandidato(numero, cep, situacao))
                 .thenThrow(new BadRequestException("Situação inválida"));
 
-        mockMvc.perform(put(ApiConstants.API_CADASTRO + "/atualizandidato/{numero}/situacao/{situacao}", numero, situacao))
+        mockMvc.perform(put(ApiConstants.API_CADASTRO + "/atualizandidato/{numero}/{cep}/situacao/{situacao}", numero, cep, situacao))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     @DisplayName("Deve remover candidato via body")
     void removeCandidato_DeveRetornarTrue() throws Exception {
-        RemoveCandidatoDto removeDto = new RemoveCandidatoDto("123");
+        String cep = "94935050";
+        RemoveCandidatoDto removeDto = new RemoveCandidatoDto("123", cep);
 
-        when(service.removeCandidato("123")).thenReturn(true);
+        when(service.removeCandidato("123", cep)).thenReturn(true);
 
         mockMvc.perform(delete(ApiConstants.API_CADASTRO + "/removecandidato")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -156,6 +159,6 @@ class CadastroControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
 
-        verify(service).removeCandidato("123");
+        verify(service).removeCandidato("123", cep);
     }
 }

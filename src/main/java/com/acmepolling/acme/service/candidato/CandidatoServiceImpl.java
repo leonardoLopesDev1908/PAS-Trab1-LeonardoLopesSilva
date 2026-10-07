@@ -91,8 +91,8 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     @Override
-    public Candidato atualizaCandidato(String numero, String situacao) throws BadRequestException {
-        Candidato candidato = getCandidatoPorNumero(numero);
+    public Candidato atualizaCandidato(String numero, String cep, String situacao) throws BadRequestException {
+        Candidato candidato = getPorNumeroELocalidade(numero, cep);
         CandidatoSituacao statusAtual = candidato.getSituacao();
         CandidatoSituacao novoStatus = CandidatoSituacao.valueOf(situacao);
 
@@ -117,10 +117,11 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     @Override
-    public Boolean removeCandidato(String numero) {
+    public Boolean removeCandidato(String numero, String cep) {
+        if(!localidadeService.existePorCep(cep)) throw new EntityNotFoundException();
         if(!repository.existsByNumero(numero)) throw new EntityNotFoundException();
 
-        Candidato candidato = repository.findByNumero(numero).orElseThrow(() -> {
+        Candidato candidato = repository.findByNumeroAndLocalidadeCep(numero, cep).orElseThrow(() -> {
             throw new EntityNotFoundException();
         });
 
@@ -137,11 +138,11 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     @Override
-    public Candidato getCandidatoPorNumero(String numero) {
-        Optional<Candidato> candidato = repository.findByNumero(numero);
+    public List<Candidato> getCandidatoPorNumero(String numero) {
+        List<Candidato> candidato = repository.findByNumero(numero);
 
         if(candidato.isEmpty()) throw new EntityNotFoundException();
-        return candidato.get();
+        return candidato;
     }
 
     @Override

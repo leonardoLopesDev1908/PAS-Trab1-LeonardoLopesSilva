@@ -38,9 +38,9 @@ public class VotacaoServiceImpl implements VotacaoService{
 
         LocalTime horaAtual = now.toLocalTime();
 
-        voto.setIsValid(!horaAtual.isBefore(HORARIO_MINIMO_VOTACAO)
-                     && !horaAtual.isAfter(HORARIO_MAXIMO_VOTACAO)
-        );
+//        voto.setIsValid(!horaAtual.isBefore(HORARIO_MINIMO_VOTACAO)
+//                     && !horaAtual.isAfter(HORARIO_MAXIMO_VOTACAO)
+//        );
 
         Candidato candidato = candidatoService.getPorNumeroELocalidade(numero, cep);
         voto.setCandidato(candidato);

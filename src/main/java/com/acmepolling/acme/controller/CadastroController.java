@@ -51,16 +51,17 @@ public class CadastroController {
         return ResponseEntity.ok(success);
     }
 
-    @PutMapping("/atualizandidato/{numero}/situacao/{situacao}")
+    @PutMapping("/atualizandidato/{numero}/{cep}/situacao/{situacao}")
     public ResponseEntity<ResponseCandidatoDto> atualizaCandidato(@PathVariable String numero,
+                                                                  @PathVariable String cep,
                                                                   @PathVariable String situacao) throws BadRequestException {
-        ResponseCandidatoDto response = mapper.toDto(service.atualizaCandidato(numero, situacao));
+        ResponseCandidatoDto response = mapper.toDto(service.atualizaCandidato(numero, cep, situacao));
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/removecandidato")
     public ResponseEntity<Boolean> removeCandidato(@RequestBody RemoveCandidatoDto dto) {
-        Boolean success = service.removeCandidato(dto.numero());
+        Boolean success = service.removeCandidato(dto.numero(), dto.cep());
         return ResponseEntity.ok(success);
     }
 }

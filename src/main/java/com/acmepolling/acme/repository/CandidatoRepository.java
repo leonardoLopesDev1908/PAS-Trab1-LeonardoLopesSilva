@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CandidatoRepository extends JpaRepository<Candidato, UUID> {
-    Optional<Candidato> findByNumero(String numero);
+    List<Candidato> findByNumero(String numero);
 
     Optional<Candidato> findByNumeroAndLocalidadeCep(String numero, String cep);
 
