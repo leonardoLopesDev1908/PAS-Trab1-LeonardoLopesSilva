@@ -1,7 +1,5 @@
 package com.acmepolling.acme.controller.mapper;
 
-import java.util.UUID;
-
 import org.springframework.stereotype.Component;
 
 import com.acmepolling.acme.controller.dto.request.CreateCandidatoDto;
@@ -25,10 +23,9 @@ public class CandidatoMapper {
     }
 
     public ResponseCandidatoDto toDto(Candidato candidato) {
-        System.out.println(candidato.getNome());
         ResponseCandidatoDto dto = new ResponseCandidatoDto(
             candidato.getNome(),
-            candidato.getStatus(),
+            candidato.getSituacao(),
             candidato.getNumero(),
             candidato.getPartido().getNome(),
             candidato.getLocalidade().getCep(),

@@ -6,7 +6,7 @@ import com.acmepolling.acme.controller.dto.response.CandidatoVotosCount;
 import com.acmepolling.acme.controller.dto.response.ResponseCandidatoDto;
 import com.acmepolling.acme.controller.dto.response.ResponseVotosDto;
 import com.acmepolling.acme.entity.Candidato;
-import com.acmepolling.acme.entity.enums.CandidatoStatus;
+import com.acmepolling.acme.entity.enums.CandidatoSituacao;
 import com.acmepolling.acme.controller.mapper.CandidatoMapper;
 import com.acmepolling.acme.service.apuracao.ApuracaoService;
 import org.junit.jupiter.api.DisplayName;
@@ -42,7 +42,7 @@ class ApuracaoControllerTest {
         String cep = "94935050";
         Candidato candidato = new Candidato();
         ResponseCandidatoDto responseDto = new ResponseCandidatoDto(
-                "João", CandidatoStatus.ELEITO,
+                "João", CandidatoSituacao.ELEITO,
                 "25", "PARTIDO", cep, "Cachoeirinha", "RS"
         );
 

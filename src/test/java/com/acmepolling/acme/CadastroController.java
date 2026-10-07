@@ -7,7 +7,7 @@ import com.acmepolling.acme.controller.dto.request.RemoveCandidatoDto;
 import com.acmepolling.acme.controller.dto.response.ResponseCandidatoDto;
 import com.acmepolling.acme.entity.Candidato;
 import com.acmepolling.acme.controller.mapper.CandidatoMapper;
-import com.acmepolling.acme.entity.enums.CandidatoStatus;
+import com.acmepolling.acme.entity.enums.CandidatoSituacao;
 import com.acmepolling.acme.service.candidato.CandidatoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.coyote.BadRequestException;
@@ -49,7 +49,7 @@ class CadastroControllerTest {
         Candidato candidato = new Candidato();
 
         ResponseCandidatoDto responseDto = new ResponseCandidatoDto(
-                "João", CandidatoStatus.PRE_CANDIDATO,
+                "João", CandidatoSituacao.PRE_CANDIDATO,
                 "25", "PARTIDO", "94935050", "Cachoeirinha",
                 "RS"
         );
@@ -73,7 +73,7 @@ class CadastroControllerTest {
         String situacao = "ELEGIVEL";
         Candidato candidato = new Candidato();
         ResponseCandidatoDto responseDto = new ResponseCandidatoDto(
-                "Maria", CandidatoStatus.ELEGIVEL,
+                "Maria", CandidatoSituacao.ELEGIVEL,
                 "99", "PARTIDO", cep, "Cachoeirinha",
                 "RS"
         );
@@ -113,7 +113,7 @@ class CadastroControllerTest {
         String novaSituacao = "ELEGIVEL";
         Candidato candidato = new Candidato();
         ResponseCandidatoDto responseDto = new ResponseCandidatoDto(
-                "Carlos", CandidatoStatus.ELEGIVEL,
+                "Carlos", CandidatoSituacao.ELEGIVEL,
                 numero, "PARTIDO", "90010170", "Cachoeirinha",
                 "RS"
         );

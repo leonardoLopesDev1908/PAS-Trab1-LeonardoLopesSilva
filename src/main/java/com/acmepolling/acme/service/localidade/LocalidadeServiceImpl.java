@@ -56,6 +56,12 @@ public class LocalidadeServiceImpl implements LocalidadeService{
         return repository.existsByCep(cep);
     }
 
+    @Override
+    public Boolean apurar(String cep, String numero) {
+        repository.apurar(cep, numero);
+        return true;
+    }
+
     private boolean isCepValid(String cep) {
         if(cep == null) return false;
         return cep.matches("^[0-9]{8}$");

@@ -1,23 +1,19 @@
 package com.acmepolling.acme.config;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
+import com.acmepolling.acme.entity.Candidato;
+import com.acmepolling.acme.entity.Localidade;
 import com.acmepolling.acme.entity.Partido;
-import com.acmepolling.acme.entity.Voto;
+import com.acmepolling.acme.entity.enums.CandidatoSituacao;
 import com.acmepolling.acme.external.CepApi;
+import com.acmepolling.acme.repository.CandidatoRepository;
 import com.acmepolling.acme.repository.LocalidadeRepository;
 import com.acmepolling.acme.repository.PartidoRepository;
 import com.acmepolling.acme.service.voto.VotacaoService;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.cglib.core.Local;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.acmepolling.acme.entity.Candidato;
-import com.acmepolling.acme.entity.Localidade;
-import com.acmepolling.acme.entity.enums.CandidatoStatus;
-import com.acmepolling.acme.repository.CandidatoRepository;
 
 @Configuration
 public class Seed {
@@ -34,150 +30,159 @@ public class Seed {
         this.partidoRepository = partidoRepository;
         this.votacaoService = votacaoService;
     }
-//
-//    @Bean
-//    CommandLineRunner basicInitDatabase(CandidatoRepository repository) {
-//        return args -> {
-//            Localidade local1 = CepApi.getLocalidade("94935050");
-//
-//            Localidade local2 = CepApi.getLocalidade("94970530");
-//
-//            Localidade local3 = CepApi.getLocalidade("90010170");
-//
-//            localidadeRepository.save(local1);
-//            localidadeRepository.save(local2);
-//            localidadeRepository.save(local3);
-//
-//            Partido partido1 = Partido.builder()
-//                    .nome("Partido Político Partidário")
-//                    .numero("60")
-//                    .anoFundacao(2017)
-//                    .candidatos(new ArrayList<>())
-//                    .build();
-//
-//            Partido partido2 = Partido.builder()
-//                    .nome("Partido da Política Brasileira")
-//                    .numero("99")
-//                    .anoFundacao(1994)
-//                    .candidatos(new ArrayList<>())
-//                    .build();
-//
-//            Partido partido3 = Partido.builder()
-//                    .nome("Partido Colunista Brasileiro")
-//                    .numero("11")
-//                    .anoFundacao(1922)
-//                    .candidatos(new ArrayList<>())
-//                    .build();
-//            partidoRepository.save(partido1);
-//            partidoRepository.save(partido2);
-//            partidoRepository.save(partido3);
-//
-//            Candidato candidato = Candidato.builder()
-//                .nome("Candidato Teste 1")
-//                .numero(partido1.getCodigo())
-//                .status(CandidatoStatus.PRE_CANDIDATO)
-//                .partido(partido1)
-//                .localidade(local1)
-//                .build();
-//
-//            repository.save(candidato);
-//
-//            Candidato candidato2 = Candidato.builder()
-//                .nome("Candidato Teste 2")
-//                .numero(partido2.getCodigo())
-//                .status(CandidatoStatus.PRE_CANDIDATO)
-//                .partido(partido2)
-//                .localidade(local2)
-//                .build();
-//
-//            repository.save(candidato2);
-//
-//            Candidato candidato3 = Candidato.builder()
-//                .nome("Candidato Teste 3")
-//                .numero(partido3.getCodigo())
-//                .status(CandidatoStatus.PRE_CANDIDATO)
-//                .partido(partido3)
-//                .localidade(local3)
-//                .build();
-//
-//            repository.save(candidato3);
-//        };
-//    }
 
     @Bean
     CommandLineRunner completeInitDatabase(CandidatoRepository repository) {
- return args -> {
+        return args -> {
             Localidade local1 = CepApi.getLocalidade("94935050");
-
             Localidade local2 = CepApi.getLocalidade("94970530");
-
             Localidade local3 = CepApi.getLocalidade("90010170");
 
-            localidadeRepository.save(local1);
-            localidadeRepository.save(local2);
-            localidadeRepository.save(local3);
+            local1 = localidadeRepository.saveAndFlush(local1);
+            local2 = localidadeRepository.saveAndFlush(local2);
+            local3 = localidadeRepository.saveAndFlush(local3);
 
-            Partido partido1 = Partido.builder()
+            Partido partido10 = Partido.builder()
                     .nome("Partido Político Partidário")
-                    .numero("60")
+                    .numero("10")
                     .anoFundacao(2017)
                     .candidatos(new ArrayList<>())
                     .build();
 
-            Partido partido2 = Partido.builder()
+            Partido partido20 = Partido.builder()
                     .nome("Partido da Política Brasileira")
-                    .numero("99")
+                    .numero("20")
                     .anoFundacao(1994)
                     .candidatos(new ArrayList<>())
                     .build();
 
-            Partido partido3 = Partido.builder()
+            Partido partido30 = Partido.builder()
                     .nome("Partido Colunista Brasileiro")
-                    .numero("11")
+                    .numero("30")
                     .anoFundacao(1922)
                     .candidatos(new ArrayList<>())
                     .build();
-            partidoRepository.save(partido1);
-            partidoRepository.save(partido2);
-            partidoRepository.save(partido3);
 
-            Candidato candidato = Candidato.builder()
-                .nome("Candidato Teste 1")
-                .numero(partido1.getNumero())
-                .status(CandidatoStatus.PRE_CANDIDATO)
-                .partido(partido1)
-                .localidade(local1)
-                .build();
+            Partido partido40 = Partido.builder()
+                    .nome("Partido do Tiktok")
+                    .numero("40")
+                    .anoFundacao(2025)
+                    .candidatos(new ArrayList<>())
+                    .build();
 
-            repository.save(candidato);
+            Partido partido50 = Partido.builder()
+                    .nome("Partido Sem Proposta")
+                    .numero("50")
+                    .anoFundacao(2005)
+                    .candidatos(new ArrayList<>())
+                    .build();
+
+            Partido partido60 = Partido.builder()
+                    .nome("Partido Atrasado")
+                    .numero("60")
+                    .anoFundacao(1981)
+                    .candidatos(new ArrayList<>())
+                    .build();
+
+            partidoRepository.saveAndFlush(partido10);
+            partidoRepository.saveAndFlush(partido20);
+            partidoRepository.saveAndFlush(partido30);
+            partidoRepository.saveAndFlush(partido40);
+            partidoRepository.saveAndFlush(partido50);
+            partidoRepository.saveAndFlush(partido60);
+
+            // Local 1: Partidos 10 e 30
+            Candidato candidato1 = Candidato.builder()
+                    .nome("Candidato 1")
+                    .numero(partido10.getNumero())
+                    .situacao(CandidatoSituacao.ELEGIVEL)
+                    .partido(partido10)
+                    .localidade(local1)
+                    .build();
 
             Candidato candidato2 = Candidato.builder()
-                .nome("Candidato Teste 2")
-                .numero(partido2.getNumero())
-                .status(CandidatoStatus.PRE_CANDIDATO)
-                .partido(partido2)
-                .localidade(local2)
-                .build();
+                    .nome("Candidato 2")
+                    .numero(partido20.getNumero())
+                    .situacao(CandidatoSituacao.ELEGIVEL)
+                    .partido(partido20)
+                    .localidade(local1)
+                    .build();
 
-            repository.save(candidato2);
+            repository.saveAndFlush(candidato1);
+            repository.saveAndFlush(candidato2);
 
+            // Local 2: Partidos 10 e 20
             Candidato candidato3 = Candidato.builder()
-                .nome("Candidato Teste 3")
-                .numero(partido3.getNumero())
-                .status(CandidatoStatus.PRE_CANDIDATO)
-                .partido(partido3)
-                .localidade(local3)
-                .build();
+                    .nome("Candidato 3")
+                    .numero(partido30.getNumero())
+                    .situacao(CandidatoSituacao.ELEGIVEL)
+                    .partido(partido30)
+                    .localidade(local2)
+                    .build();
 
-            repository.save(candidato3);
+            Candidato candidato4 = Candidato.builder()
+                    .nome("Candidato 4")
+                    .numero(partido40.getNumero())
+                    .situacao(CandidatoSituacao.ELEGIVEL)
+                    .partido(partido40)
+                    .localidade(local2)
+                    .build();
 
-            votacaoService.cadVoto("94970530", "99");
-            votacaoService.cadVoto("94970530", "99");
-            votacaoService.cadVoto("90010170", "11");
-            votacaoService.cadVoto("94970530", "99");
-            votacaoService.cadVoto("94935050", "60");
-            votacaoService.cadVoto("90010170", "11");
-            votacaoService.cadVoto("94970530", "99");
+            repository.saveAndFlush(candidato3);
+            repository.saveAndFlush(candidato4);
+
+            // Local 3: Partidos 20 e 30
+            Candidato candidato5 = Candidato.builder()
+                    .nome("Candidato 5")
+                    .numero(partido50.getNumero())
+                    .situacao(CandidatoSituacao.ELEGIVEL)
+                    .partido(partido50)
+                    .localidade(local3)
+                    .build();
+
+            Candidato candidato6 = Candidato.builder()
+                    .nome("Candidato 6")
+                    .numero(partido60.getNumero())
+                    .situacao(CandidatoSituacao.ELEGIVEL)
+                    .partido(partido60)
+                    .localidade(local3)
+                    .build();
+
+            repository.saveAndFlush(candidato5);
+            repository.saveAndFlush(candidato6);
+
+            // Votos local 1
+            votacaoService.cadVoto(local1.getCep(), partido10.getNumero());
+            votacaoService.cadVoto(local1.getCep(), partido10.getNumero());
+            votacaoService.cadVoto(local1.getCep(), partido10.getNumero());
+            votacaoService.cadVoto(local1.getCep(), partido10.getNumero());
+            votacaoService.cadVoto(local1.getCep(), partido10.getNumero());
+            votacaoService.cadVoto(local1.getCep(), partido20.getNumero());
+            votacaoService.cadVoto(local1.getCep(), partido20.getNumero());
+            votacaoService.cadVoto(local1.getCep(), partido20.getNumero());
+            votacaoService.cadVoto(local1.getCep(), partido20.getNumero());
+
+            // Votos local 2
+            votacaoService.cadVoto(local2.getCep(), partido30.getNumero());
+            votacaoService.cadVoto(local2.getCep(), partido30.getNumero());
+            votacaoService.cadVoto(local2.getCep(), partido30.getNumero());
+            votacaoService.cadVoto(local2.getCep(), partido40.getNumero());
+            votacaoService.cadVoto(local2.getCep(), partido40.getNumero());
+            votacaoService.cadVoto(local2.getCep(), partido40.getNumero());
+            votacaoService.cadVoto(local2.getCep(), partido40.getNumero());
+            votacaoService.cadVoto(local2.getCep(), partido40.getNumero());
+            votacaoService.cadVoto(local2.getCep(), partido40.getNumero());
+
+            // Votos local 3
+            votacaoService.cadVoto(local3.getCep(), partido50.getNumero());
+            votacaoService.cadVoto(local3.getCep(), partido50.getNumero());
+            votacaoService.cadVoto(local3.getCep(), partido50.getNumero());
+            votacaoService.cadVoto(local3.getCep(), partido50.getNumero());
+            votacaoService.cadVoto(local3.getCep(), partido50.getNumero());
+            votacaoService.cadVoto(local3.getCep(), partido60.getNumero());
+            votacaoService.cadVoto(local3.getCep(), partido60.getNumero());
+            votacaoService.cadVoto(local3.getCep(), partido60.getNumero());
+            votacaoService.cadVoto(local3.getCep(), partido60.getNumero());
         };
     }
 }

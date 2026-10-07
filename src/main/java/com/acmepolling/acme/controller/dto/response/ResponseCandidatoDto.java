@@ -1,10 +1,10 @@
 package com.acmepolling.acme.controller.dto.response;
 
-import com.acmepolling.acme.entity.enums.CandidatoStatus;
+import com.acmepolling.acme.entity.enums.CandidatoSituacao;
 
 public record ResponseCandidatoDto(
     String nome,
-    CandidatoStatus status,
+    CandidatoSituacao status,
     String numero,
     String partido,
     String cep,

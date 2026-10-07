@@ -31,6 +31,12 @@ public class ApuracaoController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/consultaeleito-teste")
+    public ResponseEntity<ResponseCandidatoDto> consultaEleitoTeste(@RequestParam String cep) {
+        ResponseCandidatoDto response = candidatoMapper.toDto(service.consultaEleitoTeste(cep));
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/consultalocalidade")
     public ResponseEntity<ArrayList<CandidatoVotosCount>> consultaLocalidade(@RequestParam String cep) {
         ArrayList<CandidatoVotosCount> candidatos = new ArrayList<>(service.consultaLocalidade(cep));
@@ -50,10 +56,12 @@ public class ApuracaoController {
         return ResponseEntity.ok(maisVotados);
     }
 
-//    @GetMapping("/apurar")
-//    public ResponseEntity<ResponseCandidatoDto> apuracao() {
-//        ArrayList<ResponseCandidatoDto>
-//
-//        return ResponseEntity.ok();
-//    }
+    @GetMapping("/apurar")
+    public ResponseEntity<ArrayList<ResponseCandidatoDto>> apuracao() {
+        ArrayList<ResponseCandidatoDto> candidatos = service.apura().stream()
+                .map(candidatoMapper::toDto)
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        return ResponseEntity.ok(candidatos);
+    }
 }

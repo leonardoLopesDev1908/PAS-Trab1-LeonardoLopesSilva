@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import com.acmepolling.acme.entity.enums.CandidatoStatus;
+import com.acmepolling.acme.entity.enums.CandidatoSituacao;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,7 +30,7 @@ public class Candidato {
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(255) DEFAULT 'PRE_CANDIDATO'")
-    private CandidatoStatus status;
+    private CandidatoSituacao situacao;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "partido_id")

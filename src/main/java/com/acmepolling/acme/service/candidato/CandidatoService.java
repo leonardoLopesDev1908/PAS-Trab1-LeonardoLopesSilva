@@ -26,9 +26,13 @@ public interface CandidatoService {
 
     Candidato getPorId(UUID id);
 
+    Candidato getPorNumeroELocalidade(String numero, String cep);
+
     ArrayList<Candidato> getTodos();
 
     ArrayList<Candidato> getTodosPorLocalSituacao(String cep, String situacao);
 
     Boolean removeCandidato(String numero);
+
+    Candidato getMaisVotadoPorLocalizacao(String cep);
 }

@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import com.acmepolling.acme.controller.dto.response.CandidatoVotosCount;
 import com.acmepolling.acme.entity.Localidade;
 import com.acmepolling.acme.entity.Partido;
-import com.acmepolling.acme.entity.enums.CandidatoStatus;
+import com.acmepolling.acme.entity.enums.CandidatoSituacao;
 import com.acmepolling.acme.service.localidade.LocalidadeService;
 import com.acmepolling.acme.service.partido.PartidoService;
 import jakarta.persistence.EntityNotFoundException;
@@ -50,7 +50,7 @@ public class CandidatoServiceImpl implements CandidatoService {
         Localidade localidade = localidadeService.getPorCep(cep);
 
         candidato.setLocalidade(localidade);
-        candidato.setStatus(CandidatoStatus.PRE_CANDIDATO);
+        candidato.setSituacao(CandidatoSituacao.PRE_CANDIDATO);
 
         Candidato candidatoSalvo = repository.save(candidato);
         return candidatoSalvo == null ? Boolean.FALSE : Boolean.TRUE;
@@ -66,6 +66,14 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     @Override
+    public Candidato getPorNumeroELocalidade(String numero, String cep) {
+        Candidato candidato = repository.findByNumeroAndLocalidadeCep(numero, cep)
+                .orElseThrow(() -> new EntityNotFoundException("Candidato não encontrado no CEP informado"));
+
+        return candidato;
+    }
+
+    @Override
     public ArrayList<Candidato> getTodos() {
         ArrayList<Candidato> candidatos = new ArrayList<>(repository.findAll());
 
@@ -75,7 +83,7 @@ public class CandidatoServiceImpl implements CandidatoService {
     @Override
     public ArrayList<Candidato> getTodosPorLocalSituacao(String cep, String situacao) {
         ArrayList<Candidato> candidatos = repository.findAll().stream()
-                .filter(c -> c.getStatus().equals(CandidatoStatus.valueOf(situacao)))
+                .filter(c -> c.getSituacao().equals(CandidatoSituacao.valueOf(situacao)))
                 .filter(c -> c.getLocalidade().getCep().equals(cep))
                 .collect(Collectors.toCollection(ArrayList::new));
 
@@ -85,24 +93,24 @@ public class CandidatoServiceImpl implements CandidatoService {
     @Override
     public Candidato atualizaCandidato(String numero, String situacao) throws BadRequestException {
         Candidato candidato = getCandidatoPorNumero(numero);
-        CandidatoStatus statusAtual = candidato.getStatus();
-        CandidatoStatus novoStatus = CandidatoStatus.valueOf(situacao);
+        CandidatoSituacao statusAtual = candidato.getSituacao();
+        CandidatoSituacao novoStatus = CandidatoSituacao.valueOf(situacao);
 
         if(novoStatus == statusAtual) throw new BadRequestException();
-        else if(novoStatus == CandidatoStatus.PRE_CANDIDATO) throw new BadRequestException();
-        else if((statusAtual == CandidatoStatus.PRE_CANDIDATO ||
-                statusAtual == CandidatoStatus.INELEGIVEL     ||
-                statusAtual == CandidatoStatus.REMOVIDO)      &&
-                (novoStatus == CandidatoStatus.ELEITO         ||
-                novoStatus == CandidatoStatus.NAO_ELEITO)
+        else if(novoStatus == CandidatoSituacao.PRE_CANDIDATO) throw new BadRequestException();
+        else if((statusAtual == CandidatoSituacao.PRE_CANDIDATO ||
+                statusAtual == CandidatoSituacao.INELEGIVEL     ||
+                statusAtual == CandidatoSituacao.REMOVIDO)      &&
+                (novoStatus == CandidatoSituacao.ELEITO         ||
+                novoStatus == CandidatoSituacao.NAO_ELEITO)
         ) throw new BadRequestException();
-        else if((statusAtual == CandidatoStatus.ELEGIVEL &&
-                novoStatus == CandidatoStatus.REMOVIDO)  ||
-                (statusAtual == CandidatoStatus.REMOVIDO &&
-                novoStatus == CandidatoStatus.ELEGIVEL)
+        else if((statusAtual == CandidatoSituacao.ELEGIVEL &&
+                novoStatus == CandidatoSituacao.REMOVIDO)  ||
+                (statusAtual == CandidatoSituacao.REMOVIDO &&
+                novoStatus == CandidatoSituacao.ELEGIVEL)
         ) throw new BadRequestException();
         
-        candidato.setStatus(novoStatus);
+        candidato.setSituacao(novoStatus);
         repository.save(candidato);
 
         return candidato;
@@ -116,10 +124,16 @@ public class CandidatoServiceImpl implements CandidatoService {
             throw new EntityNotFoundException();
         });
 
-        candidato.setStatus(CandidatoStatus.REMOVIDO);
+        candidato.setSituacao(CandidatoSituacao.REMOVIDO);
         repository.save(candidato);
 
         return true;
+    }
+
+    @Override
+    public Candidato getMaisVotadoPorLocalizacao(String cep) {
+        Candidato candidato = repository.getMaisVotado(cep);
+        return candidato;
     }
 
     @Override

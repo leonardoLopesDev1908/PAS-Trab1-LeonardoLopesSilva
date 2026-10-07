@@ -13,4 +13,6 @@ public interface LocalidadeService {
     Localidade getPorCep(String cep);
 
     boolean existePorCep(String cep);
+
+    Boolean apurar(String cep, String numero);
 }

@@ -2,6 +2,7 @@ package com.acmepolling.acme.common;
 
 import com.acmepolling.acme.exceptions.ForaHorarioApuracaoException;
 import com.acmepolling.acme.exceptions.ForaHorarioVotacaoException;
+import jakarta.persistence.EntityNotFoundException;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,5 +25,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ForaHorarioVotacaoException.class)
     public ResponseEntity<String> handleForaHorarioVotacaoException(ForaHorarioVotacaoException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fora do horário de votação");
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Entidade não encontrada");
     }
 }
